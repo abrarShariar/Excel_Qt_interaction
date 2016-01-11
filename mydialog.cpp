@@ -5,6 +5,8 @@
 #include<QFile>
 #include<QDesktopServices>
 #include<QUrl>
+#include<QDebug>
+#include<QProcess>
 //#include "read.h"
 
 MyDialog::MyDialog(QWidget *parent) :
@@ -32,7 +34,7 @@ void MyDialog::on_pushButton_clicked()
 
                                              //display filename path
 
-        QString destination="CustomerDetails/CustomersDetails.csv";            //destination folder for selected file
+        QString destination="../Cpp/CustomerDetails/CustomersDetails.csv";            //destination folder for selected file
         if(QFile::exists(destination)){
             QFile::remove(destination);                                     //remove file if already exists
         }
@@ -48,7 +50,7 @@ void MyDialog::on_pushButton_2_clicked()
                  tr("Customer Bills File Selector"),
                 "C:\\",
                  "Excel files(*.csv)");
-    QString destination="CustomerBills/CustomersBills.csv";            //destination folder for selected file
+    QString destination="../Cpp/CustomerBills/CustomersBills.csv";            //destination folder for selected file
     if(QFile::exists(destination)){
         QFile::remove(destination);                                    //remove file if already exists
     }
@@ -59,6 +61,20 @@ void MyDialog::on_pushButton_2_clicked()
 
 void MyDialog::on_pushButton_3_clicked()
 {
-    QDesktopServices::openUrl(QUrl("read.exe",QUrl::TolerantMode));     //run read.exe to generate output
-                                                                        //TolerantMode for windows only
+    //text & trail
+    /*
+    QString filename=QFileDialog::getOpenFileName(
+                this,
+                 tr("Read Data"),
+                "E:\\",
+                 "executable files(*.exe)");
+    qDebug()<<filename;
+    */
+    //QString filename=".\\read.exe";
+    //QUrl url("./read.exe");
+
+   // QDesktopServices::openUrl(QUrl(url.fileName(),QUrl::TolerantMode));           //run read.exe to generate output
+   //TolerantMode for windows only
+
+    QProcess::startDetached("../Cpp/read.exe");
 }
